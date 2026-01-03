@@ -58,7 +58,6 @@ export default function TodoItem({ todo }: TodoItemProps) {
           </span>
         </div>
 
-        {/* Иконки действий — появляются при hover */}
         <div className="flex items-center space-x-2 opacity-0 group-hover:opacity-100 transition">
           <Button
             variant="ghost"
@@ -79,7 +78,6 @@ export default function TodoItem({ todo }: TodoItemProps) {
         </div>
       </li>
 
-      {/* Модальное окно редактирования */}
       <Dialog open={isEditOpen} onOpenChange={setIsEditOpen}>
         <DialogContent className="bg-gray-900 border-gray-800 text-white">
           <DialogHeader>

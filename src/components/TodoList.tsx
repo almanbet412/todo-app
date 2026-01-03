@@ -5,17 +5,12 @@ import { auth } from "@/utils/firebase";
 import { signOut, onAuthStateChanged } from "firebase/auth";
 import TodoItem from "./TodoItem";
 import AuthForm from "./AuthForm";
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardContent,
-  CardFooter,
-} from "./ui/card"; // Импортируем из твоего примера
-import { Button } from "./ui/button"; // Из твоего примера
-import { cn } from "@/lib/utils"; // Из твоего примера
+import { Card, CardHeader, CardTitle, CardContent } from "./ui/card";
+import { Button } from "./ui/button";
+import { cn } from "@/lib/utils";
 import { useTodoStore } from "@/stores/todoStore";
 import TableColumn from "./TableColumn";
+import Pagination from "./Pagination";
 
 export default function TodoList() {
   const { todos, addTodo, loadTodos, loading } = useTodoStore();
@@ -54,7 +49,7 @@ export default function TodoList() {
   }
 
   return (
-    <div className="min-h-screen bg-black text-white p-4 md:p-8">
+    <div className="min-h-screen  text-white p-4 md:p-8">
       <Card
         className={cn(
           "max-w-4xl mx-auto bg-gray-900 border-gray-800 shadow-xl"
@@ -136,38 +131,11 @@ export default function TodoList() {
         </CardContent>
 
         {todos.length > 10 && (
-          <CardFooter className="flex justify-center space-x-2 border-t border-gray-800 pt-4">
-            <Button
-              variant="ghost"
-              onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
-              disabled={currentPage === 1}
-              className="text-gray-400 hover:text-white disabled:opacity-50"
-            >
-              Prev
-            </Button>
-            {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-              <Button
-                key={page}
-                variant={page === currentPage ? "default" : "ghost"}
-                onClick={() => setCurrentPage(page)}
-                className={cn(
-                  page === currentPage
-                    ? "bg-blue-600 text-white"
-                    : "text-gray-400 hover:text-white"
-                )}
-              >
-                {page}
-              </Button>
-            ))}
-            <Button
-              variant="ghost"
-              onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
-              disabled={currentPage === totalPages}
-              className="text-gray-400 hover:text-white disabled:opacity-50"
-            >
-              Next
-            </Button>
-          </CardFooter>
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            setCurrentPage={setCurrentPage}
+          />
         )}
       </Card>
     </div>
